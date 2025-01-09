@@ -36,6 +36,23 @@ function U.get_files_in_directory(dir)
 	return files
 end
 
+function U.find_file(dir, pattern)
+	cmd = nil
+	if U.is_windows() then
+		cmd = "dir \"" .. dir .. "\" /b /a-d | findstr " .. pattern
+	else
+		cmd = "find . -maxdepth 1 -type f -name \"" .. pattern .. "\""
+	end
+
+	output = io.popen(cmd)
+
+	files = {}
+	for file in output:lines() do
+		table.insert(files, file)
+	end
+	return files
+end
+
 function U.find_sln(dir)
 	cmd = nil
 	if U.is_windows() then

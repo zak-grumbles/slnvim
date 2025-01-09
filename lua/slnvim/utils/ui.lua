@@ -1,10 +1,12 @@
+local Menu = require("nui.menu")
+
 local M = {}
 
 function M.select(opts, title, fn_close, fn_select)
 	local menu_opts = {}
 
 	for i in ipairs(opts) do
-		table.insert(menu_opts, Menu.item(opts[i]))
+		table.insert(menu_opts, Menu.item(opts[i], { index = i }))
 	end
 
 	local menu = Menu({
