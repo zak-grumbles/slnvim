@@ -1,4 +1,4 @@
 
-string.startswith = function(self, str)
+string.starts_with = function(self, str)
 	return self:find('^' .. str) ~= nil
 end
