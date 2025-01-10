@@ -1,0 +1,13 @@
+title = "SLNVim TOML Example"
+
+[task]
+name = "Build Debug"
+cmd = "dotnet build -c Debug"
+
+[project]
+id = "{45DAFB73-3431-4C46-95FE-1FBC6E6110DE}"
+
+[startup_config]
+name = "Debug My App"
+projects = ["{45DAFB73-3431-4C46-95FE-1FBC6E6110DE}", "{AE2F1A24-7F92-4DC8-90A6-B20EF2CA4CE3}"]
+pre_run_tasks = ["Build Debug"]

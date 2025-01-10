@@ -5,12 +5,13 @@
 
 local toml = require("toml")
 
-local build_config = {
+local startup_config = {
 	name = nil,
-	cmd = nil
+	projects = {},
+	pre_run_tasks = {}
 }
 
-function build_config:new(o)
+function startup_config:new(o)
 	o = o or {}
 	setmetatable(o, self)
 	self.__index = self
@@ -18,10 +19,6 @@ function build_config:new(o)
 end
 
 local config = {
-	title = nil,
-	solution = nil,
-	build_configs = {},
-	projects = {},
 	startup_configs = {}
 }
 
@@ -32,11 +29,8 @@ function config:new(o)
 	return o
 end
 
-function config:load(path)
-	toml_str = fs.read_all(path)
-	print(toml_str)
+function config:from_toml(toml_str)
 end
-
 
 return config
 
