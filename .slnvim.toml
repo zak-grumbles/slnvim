@@ -4,6 +4,10 @@ title = "SLNVim TOML Example"
 name = "Build Debug"
 cmd = "dotnet build -c Debug"
 
+[task]
+name = "Build Release"
+cmd = "dotnet build -c Release"
+
 [project]
 id = "{45DAFB73-3431-4C46-95FE-1FBC6E6110DE}"
 

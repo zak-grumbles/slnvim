@@ -4,6 +4,9 @@ ui = require("slnvim.utils.ui")
 local sln = require("slnvim.sln")
 local solution = nil
 
+local config = require("slnvim.config")
+local conf = nil
+
 local term_popup = require("slnvim.utils.term_popup")
 
 -- All nui examples show capitalized names, so breaking convention here.
@@ -50,9 +53,33 @@ function build_proj(proj)
 	if proj == nil then return end
 
 	cmds = {}
-	table.insert(cmds, { "dotnet", "build" })
+	table.insert(cmds, { "MSBuild", proj.path, "-p:Configuration=Debug" })
 
 	term_popup:run_all(cmds)
+end
+
+function build_all()
+    if sln == nil then return end
+
+    cmds = {}
+	table.insert(cmds, { "MSBuild", sln.sln_path, "-p:Configuration=Debug" })
+
+	term_popup:run_all(cmds)
+end
+
+function run()
+    if conf == nil then return end
+    print(vim.inspect(conf))
+
+    local opts = {}
+    for _,start_conf in pairs(conf.startup_configs) do
+        table.insert(opts, start_conf.name)
+    end
+    ui.select(opts, "Select Run Config",
+    function() print("NONE") end,
+    function(item)
+        selected = conf.startup_configs[item.index]
+    end)
 end
 
 local M = {} -- module
@@ -61,9 +88,13 @@ function M.setup(opts)
 	opts = opts or {}
 
 	local slnvim_group = vim.api.nvim_create_augroup("slnvim", { clear = true })
-
 	vim.api.nvim_create_user_command('SLNInit', init_slnvim, { nargs = 0 })
 	vim.api.nvim_create_user_command('SLNBuild', select_proj, { nargs = 0 })
+    vim.api.nvim_create_user_command('SLNLoad', function()
+        conf = config.from_file(".slnvim.toml")
+    end, { nargs = 0 })
+    vim.api.nvim_create_user_command('SLNRun', run, { nargs = 0 })
+    vim.api.nvim_create_user_command('SLNBuildAll', build_all, { nargs = 0 })
 end
 
 

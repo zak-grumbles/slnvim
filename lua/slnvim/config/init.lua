@@ -3,7 +3,10 @@
 -- @module slnvim.config
 --
 
-local toml = require("toml")
+local fs = require("slnvim.utils.fs")
+
+local toml = require("deps.tinytoml")
+local conf = nil
 
 local startup_config = {
 	name = nil,
@@ -19,7 +22,9 @@ function startup_config:new(o)
 end
 
 local config = {
-	startup_configs = {}
+	startup_configs = {},
+    tasks = {},
+    projects = {}
 }
 
 function config:new(o)
@@ -29,7 +34,12 @@ function config:new(o)
 	return o
 end
 
-function config:from_toml(toml_str)
+function config.from_file(path)
+    print(path)
+    local parsed = toml.parse(path)
+
+    conf = config.new(parsed)
+    return conf
 end
 
 return config
