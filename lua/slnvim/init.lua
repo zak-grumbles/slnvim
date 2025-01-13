@@ -126,7 +126,9 @@ function M.setup(opts)
 	opts = opts or {}
 
 	if vim.g.slnvim_auto_init == true then
-		init_slnvim()
+		vim.api.nvim_create_autocmd({"VimEnter"}, {
+			command = init_slnvim
+		})
 	end
 
 	local slnvim_group = vim.api.nvim_create_augroup("slnvim", { clear = true })

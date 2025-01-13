@@ -36,6 +36,10 @@ function U.get_files_in_directory(dir)
 	return files
 end
 
+--- Utility method for finding files in a given directory whose names match a given pattern.
+-- @param dir string: Directory to search in. 
+-- @param pattern string: lua pattern string
+-- @return table array containing matching files. Will be empty array if no matches found.
 function U.find_file(dir, pattern)
 	cmd = nil
 	if U.is_windows() then
