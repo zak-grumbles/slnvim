@@ -2,7 +2,7 @@
 -- @module slnvim.sln
 
 require("slnvim.utils.strings")
-project = require("slnvim.project")
+local project = require("slnvim.project")
 
 --- Find the line in the given array that indicates the start of sln data.
 -- This is necessary as the file may include a byte order mark that gets placed
@@ -34,6 +34,14 @@ function M:new(o)
 	setmetatable(o, self)
 	self.__index = self
 	return o
+end
+
+function M.from_file(path)
+	result = M:new()
+
+	result:load(path)
+
+	return result
 end
 
 --- Loads the .sln file at the given path

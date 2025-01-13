@@ -22,9 +22,11 @@ function startup_config:new(o)
 end
 
 local config = {
+	title = nil,
+	sln_path = nil,
 	startup_configs = {},
-    tasks = {},
-    projects = {}
+	tasks = {},
+	projects = {}
 }
 
 function config:new(o)
@@ -35,11 +37,11 @@ function config:new(o)
 end
 
 function config.from_file(path)
-    print(path)
-    local parsed = toml.parse(path)
+	print(path)
+	local parsed = toml.parse(path)
 
-    conf = config.new(parsed)
-    return conf
+	conf = config.new(parsed)
+	return conf
 end
 
 return config
