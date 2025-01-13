@@ -78,7 +78,7 @@ end
 function load_slnvim_toml()
 	local toml_confs = fs.find_file(vim.fn.getcwd(), ".slnvim.toml")
 	if #toml_confs > 0 then
-		conf = config.from_file()
+		conf = config.from_file(toml_confs[1])
 		return conf ~= nil
 	end
 	return false
