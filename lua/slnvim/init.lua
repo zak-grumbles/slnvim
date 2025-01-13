@@ -116,11 +116,6 @@ function init_slnvim()
 
 	if toml_loaded == true then
 		solution = sln.from_file(conf.sln_path)
-	else
-		local sln_opts = fs.find_sln(vim.fn.getcwd())
-		if sln_opts ~= nil then
-			ask_for_init(sln_opts)
-		end
 	end
 end
 
