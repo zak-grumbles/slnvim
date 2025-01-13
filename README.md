@@ -11,7 +11,7 @@ This is a work in progress and may not yet be stable or fully functional.
 I highly recommend using a package manager. 
 
 ### Plug
-`Plug zak-grumbles/slnvim`
+`Plug 'zak-grumbles/slnvim'`
 
 ## Usage
 
