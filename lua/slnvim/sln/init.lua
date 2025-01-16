@@ -20,6 +20,7 @@ function get_starting_line_index(lines)
 end
 
 local M = {
+	title = nil,
 	sln_path = nil,
 	format_version = nil,
 	visual_studio_version = nil,

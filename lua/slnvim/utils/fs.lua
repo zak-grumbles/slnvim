@@ -19,6 +19,23 @@ function U.read_lines(file)
 	return lines
 end
 
+function U.separator()
+	if U.is_windows() then
+		return '\\'
+	else
+		return '/'
+	end
+end
+
+function U.write_to_file(dir, filename, content)
+	local full_path = dir .. U.separator() .. filename
+	print('WRITING TO ' .. full_path)
+	file = io.open(full_path, "w")
+	io.output(file)
+	io.write(content)
+	io.close(file)
+end
+
 function U.get_files_in_directory(dir)
 	local cmd = nil
 	if U.is_windows() then

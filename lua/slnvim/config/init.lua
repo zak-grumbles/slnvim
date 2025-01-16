@@ -5,8 +5,7 @@
 
 local fs = require("slnvim.utils.fs")
 
-local toml = require("deps.tinytoml")
-local conf = nil
+local toml = require("deps.toml")
 
 local startup_config = {
 	name = nil,
@@ -37,11 +36,27 @@ function config:new(o)
 end
 
 function config.from_file(path)
-	print(path)
-	local parsed = toml.parse(path)
+	local toml_str = fs.read_all(path)
+	print(vim.inspect(toml_str))
 
-	conf = config.new(parsed)
+	local toml_conf = toml.parse(toml_str)
+	local conf = config:new(toml_conf)
 	return conf
+end
+
+function config.from_sln(path, sln)
+	local c = config:new()
+
+	c.name = sln.title
+	c.sln_path = path
+	c.projects = sln_projects
+
+	return c
+end
+
+function config:save(dir)
+	local toml_str = toml.encode(self)
+	fs.write_to_file(dir, '.slnvim.toml', toml_str)
 end
 
 return config

@@ -1,8 +1,11 @@
 --- Plugin that provides better functionality for working with
 -- visual studio solutions.
 
-vim.g.slnvim_auto_init = true
-vim.g.slnvim_auto_create_toml = false
+
+if vim.g.slnvim_auto_init == nil then
+	vim.g.slnvim_auto_init = true
+end
+
 vim.g.slnvim_initialized = false
 
 fs = require("slnvim.utils.fs")
@@ -94,6 +97,10 @@ function sln_selection(sln_opts)
 	function(item)
 		solution = sln:new()
 		solution:load(item.text)
+
+		print('SAVING')
+		conf = config.from_sln("test", sln)
+		conf:save(vim.fn.getcwd())
 	end)
 end
 
@@ -112,10 +119,19 @@ end
 
 --- Search the current directory for solution files
 function init_slnvim()
+	print('HERE')
 	local toml_loaded = load_slnvim_toml()
 
 	if toml_loaded == true then
+		print('LOADED')
 		solution = sln.from_file(conf.sln_path)
+	else
+		print('LOOKING')
+		local slns = fs.find_file(vim.fn.getcwd(), ".sln$")
+		print(vim.inspect(slns))
+		if #slns > 0 then
+			ask_for_init(slns)
+		end
 	end
 end
 
@@ -127,7 +143,7 @@ function M.setup(opts)
 
 	if vim.g.slnvim_auto_init == true then
 		vim.api.nvim_create_autocmd({"VimEnter"}, {
-			command = init_slnvim
+			callback = init_slnvim
 		})
 	end
 
