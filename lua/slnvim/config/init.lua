@@ -44,12 +44,12 @@ function config.from_file(path)
 	return conf
 end
 
-function config.from_sln(path, sln)
+function config.from_sln(sln)
 	local c = config:new()
 
 	c.name = sln.title
-	c.sln_path = path
-	c.projects = sln_projects
+	c.sln_path = sln.sln_path
+	c.projects = sln.projects
 
 	return c
 end

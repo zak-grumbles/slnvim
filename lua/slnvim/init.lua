@@ -98,8 +98,7 @@ function sln_selection(sln_opts)
 		solution = sln:new()
 		solution:load(item.text)
 
-		print('SAVING')
-		conf = config.from_sln("test", sln)
+		conf = config.from_sln(sln)
 		conf:save(vim.fn.getcwd())
 	end)
 end
@@ -123,12 +122,9 @@ function init_slnvim()
 	local toml_loaded = load_slnvim_toml()
 
 	if toml_loaded == true then
-		print('LOADED')
 		solution = sln.from_file(conf.sln_path)
 	else
-		print('LOOKING')
 		local slns = fs.find_file(vim.fn.getcwd(), ".sln$")
-		print(vim.inspect(slns))
 		if #slns > 0 then
 			ask_for_init(slns)
 		end
